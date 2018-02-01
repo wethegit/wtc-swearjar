@@ -35,7 +35,7 @@ class WTCSwearJar {
    * @param {string} word - String to evaluate for profanity.
    */
   isProfaneLike(word) {
-    return this.blacklist.indexOf(word) || this.blacklist
+    return this.blacklist.indexOf(word) > -1 || this.blacklist
       .map(function(w) {
         return new RegExp(w.replace(/(\W)/g, '\\$1'), 'gi');
       }, this)
@@ -43,7 +43,7 @@ class WTCSwearJar {
         if (wordExp.test(word)) {
           return true;
         }
-        return outcome;
+        return outcome >= 0 ? outcome : false;
       }, false);
   };
 
