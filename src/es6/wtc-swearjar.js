@@ -83,4 +83,4 @@ class WTCSwearJar {
   }
 }
 
-export default WTCSwearJar;
+export default WTCSwearJar
