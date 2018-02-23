@@ -10,6 +10,8 @@ class WTCSwearJar {
    * @param {string} regexReplace - Regular expression used to replace profane words with placeHolder
    */
   constructor(extraWords, replacement, regex, regexReplace) {
+    this.special_blacklist = [];
+    this.check_specials = true;
     this.blacklist = Array.prototype.concat.apply(words, [extraWords || []]);
     this.replacement = replacement || '*';
     this.regex = regex || /[^a-zA-z0-9|\$|\@]|\^/g;
@@ -60,9 +62,16 @@ class WTCSwearJar {
    * @param {string} string - Sentence to filter.
    */
   clean(string) {
-    return string.split(/\b/).map(function(word) {
+    let str = string.split(/\b/).map(function(word) {
       return this.isProfane(word) ? this.replaceWord(word) : word;
     }.bind(this)).join('');
+    if(this.check_specials) {
+      for(let i = this.special_blacklist.length-1; i >= 0; i--) {
+        let word = this.special_blacklist[i];
+        str = str.replace(word, word.replace(/./g,this.replacement));
+      }
+    }
+    return str;
   };
 
   /**
@@ -75,8 +84,14 @@ class WTCSwearJar {
   }
 
   set blacklist(value) {
-    if(value instanceof Array) 
+    if(value instanceof Array) {
+      for(let i in value) {
+        if(/(\W)/.test(value[i])) {
+          this.special_blacklist.push(value[i]);
+        }
+      }
       this._blacklist = value;
+    }
   }
   get blacklist() {
     return this._blacklist || [];
