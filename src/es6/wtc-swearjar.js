@@ -23,13 +23,22 @@ class WTCSwearJar {
    * @param {string} string - String to evaluate for profanity.
    */
   isProfane(string) {
-    return string
+    let isProfane = string
       .split(' ')
       .map(function(w) {
         return w.toLowerCase().replace(this.regex, '');
       }, this)
       .filter(this.isProfaneLike, this)
       .shift() || false;
+    
+    if(isProfane === false && this.check_specials) {
+      for(let i = this.special_blacklist.length-1; i >= 0; i--) {
+        let word = this.special_blacklist[i];
+        if(string.indexOf(word) > -1) return word;
+      }
+    }
+    
+    return isProfane;
   };
 
   /**
