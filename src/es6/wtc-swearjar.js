@@ -95,11 +95,6 @@ class WTCSwearJar {
 
   set blacklist(value) {
     if(value instanceof Array) {
-      for(let i in value) {
-        if(/(\W)/.test(value[i])) {
-          this.special_blacklist.push(value[i]);
-        }
-      }
       this._blacklist = value;
       
       // This is here just to make sure that one word doesn't clobber another, more specific word.
@@ -109,11 +104,18 @@ class WTCSwearJar {
       // as `bull****`. This code is here to prevent this.
       this.blacklist.forEach((word, i)=> {
         let replaced = this.clean(word);
+        // console.log(replaced, (new RegExp('[^'+this.replacement+']', 'i')).exec(replaced))
         if((new RegExp('[^'+this.replacement+']', 'i')).exec(replaced) !== null) {
           let a = this.blacklist.splice(i, 1);
-          this.blacklist.push(a);
+          this.blacklist.push(a[0]);
         }
       });
+      // The special blacklist is here to catch any words that don't conform to normal word-boundary rules.
+      for(let i in this.blacklist) {
+        if(/(\W)/.test(value[i])) {
+          this.special_blacklist.push(value[i]);
+        }
+      }
     }
   }
   get blacklist() {

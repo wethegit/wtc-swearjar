@@ -1,6 +1,6 @@
 {
   "name": "wtc-swearjar",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "A library for finding and removing or warning of cursewords",
   "main": "dist/wtc-swearjar.js",
   "scripts": {
