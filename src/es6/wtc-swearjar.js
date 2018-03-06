@@ -12,10 +12,11 @@ class WTCSwearJar {
   constructor(extraWords, replacement, regex, regexReplace) {
     this.special_blacklist = [];
     this.check_specials = true;
-    this.blacklist = Array.prototype.concat.apply(words, [extraWords || []]);
     this.replacement = replacement || '*';
     this.regex = regex || /[^a-zA-z0-9|\$|\@]|\^/g;
     this.regexReplace = regexReplace || /\w/g;
+
+    this.blacklist = Array.prototype.concat.apply(words, [extraWords || []]);
   }
 
   /**
@@ -100,6 +101,19 @@ class WTCSwearJar {
         }
       }
       this._blacklist = value;
+      
+      // This is here just to make sure that one word doesn't clobber another, more specific word.
+      // For example if your list is:
+      // [ bullshit, shit ]
+      // then feeding the word `bullshit` to this will result in a false positive and only censor
+      // as `bull****`. This code is here to prevent this.
+      this.blacklist.forEach((word, i)=> {
+        let replaced = this.clean(word);
+        if((new RegExp('[^'+this.replacement+']', 'i')).exec(replaced) !== null) {
+          let a = this.blacklist.splice(i, 1);
+          this.blacklist.push(a);
+        }
+      });
     }
   }
   get blacklist() {
