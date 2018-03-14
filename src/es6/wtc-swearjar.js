@@ -24,20 +24,20 @@ class WTCSwearJar {
    * @param {string} string - String to evaluate for profanity.
    */
   isProfane(string) {
-    let isProfane = string
+    let isProfane = false 
+    if(this.check_specials) {
+      for(let i = this.special_blacklist.length-1; i >= 0; i--) {
+        let word = this.special_blacklist[i];
+        if(string.indexOf(word) > -1) return word;
+      }
+    }
+    isProfane = string
       .split(' ')
       .map(function(w) {
         return w.toLowerCase().replace(this.regex, '');
       }, this)
       .filter(this.isProfaneLike, this)
       .shift() || false;
-    
-    if(isProfane === false && this.check_specials) {
-      for(let i = this.special_blacklist.length-1; i >= 0; i--) {
-        let word = this.special_blacklist[i];
-        if(string.indexOf(word) > -1) return word;
-      }
-    }
     
     return isProfane;
   };
@@ -72,15 +72,16 @@ class WTCSwearJar {
    * @param {string} string - Sentence to filter.
    */
   clean(string) {
-    let str = string.split(/\b/).map(function(word) {
-      return this.isProfane(word) ? this.replaceWord(word) : word;
-    }.bind(this)).join('');
+    let str = string;
     if(this.check_specials) {
       for(let i = this.special_blacklist.length-1; i >= 0; i--) {
         let word = this.special_blacklist[i];
         str = str.replace(word, word.replace(/./g,this.replacement));
       }
     }
+    str = str.split(/\b/).map(function(word) {
+      return this.isProfane(word) ? this.replaceWord(word) : word;
+    }.bind(this)).join('');
     return str;
   };
 
