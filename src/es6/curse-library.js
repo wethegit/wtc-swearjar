@@ -119,7 +119,6 @@ export default [
     "Bumwipe",
     "bunghole",
     "butsuckers",
-    "buttf*cking",
     "buttfuck",
     "buttfucked",
     "buttfucker",
@@ -276,7 +275,6 @@ export default [
     "f*cking",
     "fckn",
     "f*ckshitup",
-    "f*cksh*tup",
     "f*ckwit",
     "fcuk",
     "fcukin",
@@ -727,5 +725,7 @@ export default [
     "wop",
     "wpww",
     "wtf",
-    "@zz"
+    "@zz",
+    "buttf*cking",
+    "f*cksh*tup"
   ]
