@@ -1,4 +1,4 @@
-let words [
+let words = [
   "5hit",
   "a@$",
   "a$$",
