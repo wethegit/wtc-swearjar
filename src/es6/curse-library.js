@@ -266,7 +266,6 @@ export default [
     "f'bomb",
     "f-cake",
     "fck",
-    "f*ck",
     "f*ckbuddy",
     "f*cked",
     "f*cker",
@@ -727,5 +726,6 @@ export default [
     "wtf",
     "@zz",
     "buttf*cking",
-    "f*cksh*tup"
+    "f*cksh*tup",
+    "f*ck"
   ]
