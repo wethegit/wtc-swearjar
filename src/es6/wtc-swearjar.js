@@ -17,7 +17,7 @@ class WTCSwearJar {
     this.regex = regex || /[^a-zA-z0-9|\$|\@]|\^/g;
     this.regexReplace = regexReplace || /\w/g;
 
-    if(specialWords instanceOf Array) {
+    if(specialWords instanceof Array) {
       this.special_blacklist = specialWords;
     }
     this.blacklist = Array.prototype.concat.apply(words, [extraWords || []]);
