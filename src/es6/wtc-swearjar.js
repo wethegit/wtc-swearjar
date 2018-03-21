@@ -10,14 +10,14 @@ class WTCSwearJar {
    * @param {string} regex - Regular expression used to sanitize words before comparing them to blacklist
    * @param {string} regexReplace - Regular expression used to replace profane words with placeHolder
    */
-  constructor(extraWords, specialWords, replacement, regex, regexReplace) {
+  constructor(extraWords = [], specialWords = [], replacement, regex, regexReplace) {
     this.check_specials = true;
     this.replacement = replacement || '*';
     this.regex = regex || /[^a-zA-z0-9|\$|\@]|\^/g;
     this.regexReplace = regexReplace || /\w/g;
 
-    this.special_blacklist = Array.prototype.concat.apply(specials, [specials || []]);
-    this.blacklist = Array.prototype.concat.apply(words, [extraWords || []]);
+    this.special_blacklist = Array.prototype.concat.apply(specials, [specialWords]);
+    this.blacklist = Array.prototype.concat.apply(words, [extraWords]);
   }
 
   /**
