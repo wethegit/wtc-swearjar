@@ -1,4 +1,4 @@
-import words from './curse-library';
+import {words, specials} from './curse-library';
 
 class WTCSwearJar {
   /**
@@ -11,15 +11,12 @@ class WTCSwearJar {
    * @param {string} regexReplace - Regular expression used to replace profane words with placeHolder
    */
   constructor(extraWords, specialWords, replacement, regex, regexReplace) {
-    this.special_blacklist = [];
     this.check_specials = true;
     this.replacement = replacement || '*';
     this.regex = regex || /[^a-zA-z0-9|\$|\@]|\^/g;
     this.regexReplace = regexReplace || /\w/g;
 
-    if(specialWords instanceof Array) {
-      this.special_blacklist = specialWords;
-    }
+    this.special_blacklist = Array.prototype.concat.apply(specials, [specials || []]);
     this.blacklist = Array.prototype.concat.apply(words, [extraWords || []]);
   }
 
