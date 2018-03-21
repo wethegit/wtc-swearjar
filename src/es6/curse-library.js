@@ -1,4 +1,4 @@
-let words = [
+const words = [
   "5hit",
   "a@$",
   "a$$",
@@ -727,7 +727,9 @@ let words = [
   "f*ck",
   "f*cking"
 ];
-let specials = [
+
+
+const specials = [
   "buttf*cking",
   "f*cksh*tup"
 ]

@@ -1,4 +1,4 @@
-import {words, specials} from './curse-library';
+import words, {specials} from './curse-library';
 
 class WTCSwearJar {
   /**
@@ -16,8 +16,9 @@ class WTCSwearJar {
     this.regex = regex || /[^a-zA-z0-9|\$|\@]|\^/g;
     this.regexReplace = regexReplace || /\w/g;
 
-    this.special_blacklist = Array.prototype.concat.apply(specials, [specialWords]);
-    this.blacklist = Array.prototype.concat.apply(words, [extraWords]);
+    this.special_blacklist = [];
+    this.blacklist = words.concat(extraWords).slice(0);
+    this.special_blacklist = this.special_blacklist.concat(specials.concat(specialWords))
   }
 
   /**
