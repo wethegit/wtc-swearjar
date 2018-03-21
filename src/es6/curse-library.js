@@ -726,6 +726,6 @@ export default [
     "@zz",
     "buttf*cking",
     "f*cksh*tup",
-    "f*cking",
-    "f*ck"
+    "f*ck",
+    "f*cking"
   ]

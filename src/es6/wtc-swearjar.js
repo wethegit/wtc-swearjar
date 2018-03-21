@@ -5,17 +5,21 @@ class WTCSwearJar {
    * WTCSwearJar constructor.
    * @constructor
    * @param {array} extraWords - Additional words to add to the blacklist
+   * @param {array} specialWords - Additional words to add to the blacklist
    * @param {string} replacement - Character for replacing swears
    * @param {string} regex - Regular expression used to sanitize words before comparing them to blacklist
    * @param {string} regexReplace - Regular expression used to replace profane words with placeHolder
    */
-  constructor(extraWords, replacement, regex, regexReplace) {
+  constructor(extraWords, specialWords, replacement, regex, regexReplace) {
     this.special_blacklist = [];
     this.check_specials = true;
     this.replacement = replacement || '*';
     this.regex = regex || /[^a-zA-z0-9|\$|\@]|\^/g;
     this.regexReplace = regexReplace || /\w/g;
 
+    if(specialWords instanceOf Array) {
+      this.special_blacklist = specialWords;
+    }
     this.blacklist = Array.prototype.concat.apply(words, [extraWords || []]);
   }
 
