@@ -10,11 +10,12 @@ class WTCSwearJar {
    * @param {string} regex - Regular expression used to sanitize words before comparing them to blacklist
    * @param {string} regexReplace - Regular expression used to replace profane words with placeHolder
    */
-  constructor(extraWords = [], specialWords = [], replacement, regex, regexReplace) {
+  constructor(extraWords = [], specialWords = [], replacement, regex, regexReplace, wordBoundary = true) {
     this.check_specials = true;
     this.replacement = replacement || '*';
     this.regex = regex || /[^a-zA-z0-9|\$|\@]|\^/g;
     this.regexReplace = regexReplace || /\w/g;
+    this.testWordBoundary = wordBoundary;
 
     this.special_blacklist = [];
     this.blacklist = words.concat(extraWords).slice(0);
@@ -50,8 +51,12 @@ class WTCSwearJar {
    */
   isProfaneLike(word) {
     return this.blacklist.indexOf(word) > -1 || this.blacklist
-      .map(function(w) {
-        return new RegExp(w.replace(/(\W)/g, '\\$1'), 'gi');
+      .map((w) => {
+        let exp = new RegExp(w.replace(/(\W)/g, '\\$1'), 'gi');
+        if(this.testWordBoundary) {
+          exp = new RegExp('\W' + w.replace(/(\W)/g, '\\$1') + '\W', 'gi');
+        }
+        return exp;
       }, this)
       .reduce(function(outcome, wordExp) {
         if (wordExp.test(word)) {
