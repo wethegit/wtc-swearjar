@@ -119,11 +119,11 @@ class WTCSwearJar {
         }
       });
       // The special blacklist is here to catch any words that don't conform to normal word-boundary rules.
-      for(let i in this.blacklist) {
-        if(/(\W)/.test(value[i])) {
-          this.special_blacklist.push(value[i]);
-        }
-      }
+      // for(let i in this.blacklist) {
+      //   if(/(\W)/.test(value[i])) {
+      //     this.special_blacklist.push(value[i]);
+      //   }
+      // }
     }
   }
   get blacklist() {
