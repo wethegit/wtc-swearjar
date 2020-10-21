@@ -19,7 +19,20 @@ class WTCSwearJar {
 
     this.special_blacklist = [];
     this.blacklist = words.concat(extraWords).slice(0);
-    this.special_blacklist = this.special_blacklist.concat(specials.concat(specialWords))
+    this.special_blacklist = this.special_blacklist.concat(specials.concat(specialWords));
+
+    // This updates the special black list with all the words from the black list thet might
+    // contain word boundaries. This ensures that all words within the blacklist are caught
+    // by the swearjar because the basic, quick method of testing does so by word boundaries
+    // which might not be relevant. It also removes the relevant word from the blacklist
+    // as it's now useless there.
+    for(let i = this.blacklist.length - 1; i >=0; i--) {
+      const word = this.blacklist[i];
+      if(word.split(/\b/).length > 1) {
+        this.special_blacklist.push(word);
+        this.blacklist.splice(i, 1);
+      }
+    }
   }
 
   /**
